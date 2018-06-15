@@ -1,9 +1,11 @@
-$(window).on('load', startScraping);
-
 function startScraping() {
+
+    onDetailsCollected(onDetailsCollectedHandler);
+
     if (TodayEvents.isTodayEventsPage()) {
         const todayEvents = new TodayEvents().todayEvents;
-        window.open(todayEvents[0].link, '_blank');
+        // window.open(todayEvents[0].link, '_blank');
+        window.location.href = todayEvents[0].link;
     } else { //event details
         const details = new EventDetails();
         alert('cur bet 1: ' + details.currentBet1);
@@ -12,10 +14,20 @@ function startScraping() {
     }
 }
 
-// chrome.runtime.getBackgroundPage(function() {
-//     console.log('should be bg page', this);
-// });
-// chrome.storage.local.set({variable: 'variableInformation'});
-// chrome.storage.local.get(['variable'], function (result) {
-//     console.log('bar', result.variable);
-// });
+function onDetailsCollected(callback) {
+    chrome.storage.onChanged.addListener(callback);
+}
+
+function onDetailsCollectedHandler(changes, namespace) {
+    for (key in changes) {
+        var storageChange = changes[key];
+        console.log('Storage key "%s" in namespace "%s" changed. ' +
+            'Old value was "%s", new value is "%s".',
+            key,
+            namespace,
+            storageChange.oldValue,
+            storageChange.newValue);
+    }
+}
+
+$(window).on('load', startScraping);
