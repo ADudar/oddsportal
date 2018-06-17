@@ -5,6 +5,7 @@ $(window).on('load', startScraping);
  */
 function startScraping() {
     if (TodayEvents.isTodayEventsPage) {
+        clearLocalStorage();
         const todayEvents = new TodayEvents().todayEvents, i = 0;
         setDataToStorage({i, count: todayEvents.length, todayEvents});
         navigateEventDetailsPage(todayEvents, i);
@@ -20,6 +21,7 @@ function startScraping() {
  */
 function HandlerEventsDetails(storage) {
     let {count, i, todayEvents} = storage;
+    if (!todayEvents) return;
     if (++i < count && i < 5) {
         const details = new EventDetails();
         todayEvents[i - 1].maxBet1 = details.maxBet1;
@@ -60,6 +62,13 @@ function getDataFromStorage(dataArr, callback) {
 }
 
 /**
+ * clear chrome local storage
+ */
+function clearLocalStorage() {
+    chrome.storage.local.clear();
+}
+
+/**
  * on end handler
  */
 function onEnd() {
@@ -68,6 +77,7 @@ function onEnd() {
         const filtered = storage.todayEvents
             .filter(droppingBookiesGreaterEqual15Percents);
         console.log(filtered);
+        clearLocalStorage();
     });
 }
 
