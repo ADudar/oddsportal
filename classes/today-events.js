@@ -7,7 +7,7 @@ class TodayEvents {
      * check if today events page opened
      * @returns {boolean | jQuery}
      */
-    static isTodayEventsPage() {
+    static get isTodayEventsPage() {
         const todayTitleSelector = '#col-content h1';
         const includesText = 'Today';
         return $(todayTitleSelector).first().text().includes(includesText);
@@ -15,8 +15,10 @@ class TodayEvents {
 
     /**
      * constructor
+     * @param skipNoBetsEvents
      */
-    constructor() {
+    constructor(skipNoBetsEvents = true) {
+        this.skipNoBetsEvents = skipNoBetsEvents;
         /**
          * events selector
          * @type {string}
@@ -82,12 +84,15 @@ class TodayEvents {
         const avCoeffs1 = this.averageCoefParticipant1.toArray();
         const avCoeffs2 = this.averageCoefParticipant2.toArray();
         return this.todayParticipants.toArray().reduce((prev, cur, index) => {
+            if (this.skipNoBetsEvents && avCoeffs1[index] === '-') {
+                return prev;
+            }
             prev.push({
                 participants: cur,
                 link: links[index],
                 time: times[index],
-                average1: avCoeffs1[index],
-                average2: avCoeffs2[index],
+                average1: +avCoeffs1[index],
+                average2: +avCoeffs2[index],
                 country: '',
                 tournament: ''
             });
