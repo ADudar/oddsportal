@@ -68,6 +68,6 @@ class EventDetails {
      * @param num
      */
     getCurrentBet(num) {
-        return this.bets.eq(num).text();
+        return +this.bets.eq(num).text();
     }
 }

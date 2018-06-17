@@ -26,6 +26,7 @@
         "classes/tooltip.js",
         "classes/event-details.js",
         "classes/today-events.js",
+        "filters.js",
         "main.js"
       ]
     }

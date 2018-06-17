@@ -24,7 +24,9 @@ function HandlerEventsDetails(storage) {
         const details = new EventDetails();
         todayEvents[i - 1].maxBet1 = details.maxBet1;
         todayEvents[i - 1].maxBet2 = details.maxBet2;
-        setDataToStorage({i: i + 1, todayEvents});
+        todayEvents[i - 1].currentBet1 = details.currentBet1;
+        todayEvents[i - 1].currentBet2 = details.currentBet2;
+        setDataToStorage({i, todayEvents});
         navigateEventDetailsPage(todayEvents, i);
     } else {
         onEnd();
@@ -63,7 +65,10 @@ function getDataFromStorage(dataArr, callback) {
 function onEnd() {
     alert('end');
     getDataFromStorage(['todayEvents'], (storage) => {
-        console.log(storage.todayEvents);
+        const filtered = storage.todayEvents
+            .filter(droppingBookiesGreaterEqual15Percents);
+        console.log(filtered);
     });
 }
+
 
