@@ -5,6 +5,7 @@ $(window).on('load', startScraping);
  */
 function startScraping() {
     if (TodayEvents.isTodayEventsPage) {
+        console.log('script started');
         clearLocalStorage();
         const todayEvents = new TodayEvents().todayEvents, i = 0;
         setDataToStorage({i, count: todayEvents.length, todayEvents});
@@ -21,7 +22,7 @@ function startScraping() {
  */
 function HandlerEventsDetails(storage) {
     let {count, i, todayEvents} = storage;
-    if (!todayEvents) return;
+    if (!todayEvents) return onErrorEmptyStorage();
     if (++i < count && i < 5) {
         const details = new EventDetails();
         todayEvents[i - 1].maxBet1 = details.maxBet1;
@@ -81,4 +82,12 @@ function onEnd() {
     });
 }
 
+function onErrorEmptyStorage() {
+    alert('empty storage exit');
+}
 
+
+// TODO: rerun script in every 30 min
+// TODO: send notification to email
+// TODO: parse different bookmakers, not only hardcoded first
+// TODO: Add country and tournament
