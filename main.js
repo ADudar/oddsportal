@@ -8,6 +8,7 @@ function startScraping() {
         console.log('script started');
         clearLocalStorage();
         const todayEvents = new TodayEvents().todayEvents, i = 0;
+        console.log('today events', todayEvents);
         setDataToStorage({i, count: todayEvents.length, todayEvents});
         navigateEventDetailsPage(todayEvents, i);
     } else { //event details
@@ -90,4 +91,3 @@ function onErrorEmptyStorage() {
 // TODO: rerun script in every 30 min
 // TODO: send notification to email
 // TODO: parse different bookmakers, not only hardcoded first
-// TODO: Add country and tournament

@@ -63,7 +63,7 @@ class TodayEvents {
      * @returns {*|{}|Uint8Array|string[]|Int32Array|Uint16Array}
      */
     get averageCoefParticipant1() {
-        return this.events.map((i, el) => el.nextSibling.innerText.trim());
+        return this.events.map((i, el) => +$(el).nextAll('.odds-nowrp').first().text());
     }
 
     /**
@@ -71,7 +71,31 @@ class TodayEvents {
      * @returns {*|{}|Uint8Array|string[]|Int32Array|Uint16Array}
      */
     get averageCoefParticipant2() {
-        return this.events.map((i, el) => el.nextSibling.nextSibling.innerText.trim());
+        return this.events.map((i, el) => +$(el).nextAll('.odds-nowrp').eq(1).text());
+    }
+
+    /**
+     * getter courntries
+     * @returns {*|{}|Uint8Array|(*|string|jQuery)[]|Int32Array|Uint16Array}
+     */
+    get countries() {
+        return this.events.map((i, el) => $(el).parent().prevAll('.dark.center').first().find('a').first().text().trim())
+    }
+
+    /**
+     * getter tournaments
+     * @returns {*|{}|Uint8Array|(*|string|jQuery)[]|Int32Array|Uint16Array}
+     */
+    get tournaments() {
+        return this.events.map((i, el) => $(el).parent().prevAll('.dark.center').first().find('a').eq(1).text().trim())
+    }
+
+    /**
+     * getter result scores
+     * @returns {*|{}|Uint8Array|jQuery[]|Int32Array|Uint16Array}
+     */
+    get resultScores() {
+        return this.events.map((i, el) => $(el).next('.table-score').text());
     }
 
     /**
@@ -83,6 +107,9 @@ class TodayEvents {
         const times = this.todayTimes.toArray();
         const avCoeffs1 = this.averageCoefParticipant1.toArray();
         const avCoeffs2 = this.averageCoefParticipant2.toArray();
+        const tournaments = this.tournaments;
+        const countries = this.countries;
+        const resultScores = this.resultScores;
         return this.todayParticipants.toArray().reduce((prev, cur, index) => {
             if (this.skipNoBetsEvents && avCoeffs1[index] === '-') {
                 return prev;
@@ -91,10 +118,11 @@ class TodayEvents {
                 participants: cur,
                 link: links[index],
                 time: times[index],
-                average1: +avCoeffs1[index],
-                average2: +avCoeffs2[index],
-                country: '',
-                tournament: ''
+                averageBet1: +avCoeffs1[index],
+                averageBet2: +avCoeffs2[index],
+                tournament: tournaments[index],
+                country: countries[index],
+                resultScore: resultScores[index]
             });
             return prev;
         }, [])
