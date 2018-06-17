@@ -16,9 +16,11 @@ class TodayEvents {
     /**
      * constructor
      * @param skipNoBetsEvents
+     * @param skipResultsWithScores
      */
-    constructor(skipNoBetsEvents = true) {
+    constructor(skipNoBetsEvents = true, skipResultsWithScores = true) {
         this.skipNoBetsEvents = skipNoBetsEvents;
+        this.skipResultsWithScores = skipResultsWithScores;
         /**
          * events selector
          * @type {string}
@@ -94,7 +96,7 @@ class TodayEvents {
      * getter result scores
      * @returns {*|{}|Uint8Array|jQuery[]|Int32Array|Uint16Array}
      */
-    get resultScores() {
+    get resultsScores() {
         return this.events.map((i, el) => $(el).next('.table-score').text());
     }
 
@@ -109,9 +111,9 @@ class TodayEvents {
         const avCoeffs2 = this.averageCoefParticipant2.toArray();
         const tournaments = this.tournaments;
         const countries = this.countries;
-        const resultScores = this.resultScores;
+        const resultsScores = this.resultsScores;
         return this.todayParticipants.toArray().reduce((prev, cur, index) => {
-            if (this.skipNoBetsEvents && avCoeffs1[index] === '-') {
+            if (this.skipAndNoBets(avCoeffs1, index) || this.skipAndResultsWithScores(resultsScores, index)) {
                 return prev;
             }
             prev.push({
@@ -122,10 +124,32 @@ class TodayEvents {
                 averageBet2: +avCoeffs2[index],
                 tournament: tournaments[index],
                 country: countries[index],
-                resultScore: resultScores[index]
+                resultScore: resultsScores[index]
             });
             return prev;
         }, [])
 
+    }
+
+    /**
+     * skip event if skip flag
+     * and have result
+     * @param resultsWithScores
+     * @param index
+     * @returns {boolean|*}
+     */
+    skipAndResultsWithScores(resultsWithScores, index) {
+        return this.skipResultsWithScores && !!resultsWithScores[index];
+    }
+
+    /**
+     * skip event if skip flag
+     * and no bets
+     * @param avCoeffs1
+     * @param index
+     * @returns {boolean|*}
+     */
+    skipAndNoBets(avCoeffs1, index) {
+        return this.skipNoBetsEvents && isNaN(avCoeffs1[index]);
     }
 }
