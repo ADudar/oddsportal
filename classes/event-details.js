@@ -8,15 +8,30 @@ class EventDetails {
          * all average bets selector
          * @type {string}
          */
-        this.betsSelector = '.table-container:first-child tr .odds [onmouseover]';
+        this.betsSelector = '.table-container:first-child .odds [onmouseover]';
+        this.bookmakersSelector = `.table-container:first-child .lo .name2[href*='{0}']`;
     }
 
     /**
      * getter all average bets
      * @returns {*|jQuery|HTMLElement}
      */
-    get bets() {
-        return this._bets ? this._bets : this._bets = $(this.betsSelector);
+    getBets(bookmakerName = 'pinnacle') {
+        if (this._bb && this._bb.length) {
+            return this._bb;
+        }
+        const bb = $(this.bookmakersSelector.replace('{0}', bookmakerName));
+        if (bb && bb.length) {
+            this._bb = bb.parent().parent().nextAll('.odds').map((i,el) => $(el).find('[onmouseover]').get());
+            return this._bb;
+        }
+        if (this._bets) {
+            return this._bets;
+        }
+        const bets = $(this.betsSelector).slice(0,2);
+        debugger;
+        this._bets = bets;
+        return bets;
     }
 
     /**
@@ -42,7 +57,7 @@ class EventDetails {
      * @returns {number}
      */
     getmaxBet(num) {
-        this.bets.get(num).dispatchEvent(new Event('mouseover'));
+        this.getBets().get(num).dispatchEvent(new Event('mouseover'));
         const coeffs = new Tooltip().coeffs;
         return Math.max(...coeffs);
     }
@@ -68,6 +83,6 @@ class EventDetails {
      * @param num
      */
     getCurrentBet(num) {
-        return +this.bets.eq(num).text();
+        return +this.getBets().eq(num).text();
     }
 }

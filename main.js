@@ -24,7 +24,7 @@ function startScraping() {
 function HandlerEventsDetails(storage) {
     let {count, i, todayEvents} = storage;
     if (!todayEvents) return onErrorEmptyStorage();
-    if (++i < count && i < 5) {
+    if (++i < count) {
         const details = new EventDetails();
         todayEvents[i - 1].maxBet1 = details.maxBet1;
         todayEvents[i - 1].maxBet2 = details.maxBet2;
@@ -90,4 +90,6 @@ function onErrorEmptyStorage() {
 
 // TODO: rerun script in every 30 min
 // TODO: send notification to email
-// TODO: parse different bookmakers, not only hardcoded first
+// TODO: parse different bookmakers ? refactor
+// TODO: last event current bet's doesn't show
+// TODO: why max bet opening odds ignored ?
