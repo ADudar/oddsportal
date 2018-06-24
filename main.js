@@ -1,3 +1,5 @@
+const LOG_ENABLED = true;
+
 $(window).on('load', startScraping);
 
 /**
@@ -5,10 +7,10 @@ $(window).on('load', startScraping);
  */
 function startScraping() {
     if (TodayEvents.isTodayEventsPage) {
-        console.log('script started');
+        log('script started');
         clearLocalStorage();
         const todayEvents = new TodayEvents().todayEvents, i = 0;
-        console.log('today events', todayEvents);
+        log('today events', todayEvents);
         if (!todayEvents.length) {
             return onErrorNoTodayEvents();
         }
@@ -77,21 +79,39 @@ function clearLocalStorage() {
  * on end handler
  */
 function onEnd() {
-    alert('end');
+    log('end');
     getDataFromStorage(['todayEvents'], (storage) => {
         const filtered = storage.todayEvents
             .filter(droppingBookiesGreaterEqual15Percents);
-        console.log(filtered);
+        log('result', filtered);
         clearLocalStorage();
     });
 }
 
+/**
+ * error handler empty storage
+ */
 function onErrorEmptyStorage() {
-    alert('empty storage exit');
+    log('empty storage exit');
 }
 
+/**
+ * error handler no today events
+ */
 function onErrorNoTodayEvents() {
-    alert('no today events, exit');
+    log('no today events, exit');
+}
+
+/**
+ * log function alert and console
+ * @param message
+ * @param data
+ */
+function log(message, data) {
+        if (LOG_ENABLED) {
+            alert(message);
+            console.log(message, data);
+        }
 }
 
 
