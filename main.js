@@ -9,6 +9,9 @@ function startScraping() {
         clearLocalStorage();
         const todayEvents = new TodayEvents().todayEvents, i = 0;
         console.log('today events', todayEvents);
+        if (!todayEvents.length) {
+            return onErrorNoTodayEvents();
+        }
         setDataToStorage({i, count: todayEvents.length, todayEvents});
         navigateEventDetailsPage(todayEvents, i);
     } else { //event details
@@ -85,6 +88,10 @@ function onEnd() {
 
 function onErrorEmptyStorage() {
     alert('empty storage exit');
+}
+
+function onErrorNoTodayEvents() {
+    alert('no today events, exit');
 }
 
 
