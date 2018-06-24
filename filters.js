@@ -4,5 +4,5 @@
  * @returns {boolean}
  */
 function droppingBookiesGreaterEqual15Percents(e) {
-    return (e.maxBet1 - e.currentBet1) / (e.maxBet1 - 1) >= 0.15;
+    return (e.maxHistoryBet1 - e.currentBet1) / (e.maxHistoryBet1 - 1) >= 0.15;
 }

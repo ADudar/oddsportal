@@ -8,14 +8,30 @@ class Tooltip {
          * @type {string}
          * @private
          */
-        this._selector = '#tooltiptext strong:not(:last-of-type)';
+        this._historyBets = '#tooltiptext strong:not(:last-of-type)';
+
+        /**
+         * selector tooltip opening odds event
+         * @type {string}
+         * @private
+         */
+        this._openingBets = '#tooltiptext strong:last-of-type';
     }
 
     /**
-     * getter coeffs array
+     * getter odds history array
      * @returns {*|T[]|jQuery}
      */
     get coeffs() {
-        return $(this._selector).map((i, v) => +v.innerText).toArray();
+        return $(this._historyBets).map((i, v) => +v.innerText).toArray();
+    }
+
+    /**
+     * getter opening odds
+     * @returns {number}
+     */
+    get openingBets() {
+        const lastBet = +$(this._openingBets).text();
+        return lastBet ? lastBet : $(this._openingBets).prevAll('strong').first().text();
     }
 }

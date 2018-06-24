@@ -29,7 +29,6 @@ class EventDetails {
             return this._bets;
         }
         const bets = $(this.betsSelector).slice(0,2);
-        debugger;
         this._bets = bets;
         return bets;
     }
@@ -38,8 +37,8 @@ class EventDetails {
      * getter max bet first event
      * @returns {number}
      */
-    get maxBet1() {
-        return this.getmaxBet(0);
+    get maxHistoryBet1() {
+        return this.getMaxHistoryBet(0);
 
     }
 
@@ -47,8 +46,8 @@ class EventDetails {
      * getter max bet second event
      * @returns {number}
      */
-    get maxBet2() {
-        return this.getmaxBet(1);
+    get maxHistoryBet2() {
+        return this.getMaxHistoryBet(1);
     }
 
     /**
@@ -56,10 +55,36 @@ class EventDetails {
      * @param num
      * @returns {number}
      */
-    getmaxBet(num) {
+    getMaxHistoryBet(num) {
         this.getBets().get(num).dispatchEvent(new Event('mouseover'));
         const coeffs = new Tooltip().coeffs;
         return Math.max(...coeffs);
+    }
+
+    /**
+     * getter opening bet first
+     * @returns {*}
+     */
+    get openingBet1() {
+        return this.getOpeningOdds(0)
+    }
+
+    /**
+     * getter opening bet second
+     * @returns {*}
+     */
+    get openingBet2() {
+        return this.getOpeningOdds(1);
+    }
+
+    /**
+     * get opening odds for team
+     * @param num
+     * @returns {number}
+     */
+    getOpeningOdds(num) {
+        this.getBets().get(num).dispatchEvent(new Event('mouseover'));
+        return new Tooltip().openingBets;
     }
 
     /**

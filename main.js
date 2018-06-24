@@ -1,4 +1,5 @@
 const LOG_ENABLED = true;
+const ALERT_ENABLED = false;
 
 $(window).on('load', startScraping);
 
@@ -29,12 +30,16 @@ function startScraping() {
 function HandlerEventsDetails(storage) {
     let {count, i, todayEvents} = storage;
     if (!todayEvents) return onErrorEmptyStorage();
-    if (++i < count) {
+    if (i < count && i<5) {
+        log('i', i);
         const details = new EventDetails();
-        todayEvents[i - 1].maxBet1 = details.maxBet1;
-        todayEvents[i - 1].maxBet2 = details.maxBet2;
-        todayEvents[i - 1].currentBet1 = details.currentBet1;
-        todayEvents[i - 1].currentBet2 = details.currentBet2;
+        todayEvents[i].maxBet1 = details.maxHistoryBet1;
+        todayEvents[i].maxBet2 = details.maxHistoryBet2;
+        todayEvents[i].currentBet1 = details.currentBet1;
+        todayEvents[i].currentBet2 = details.currentBet2;
+        todayEvents[i].openingBet1 = details.openingBet1;
+        todayEvents[i].openingBet2 = details.openingBet2;
+        i++;
         setDataToStorage({i, todayEvents});
         navigateEventDetailsPage(todayEvents, i);
     } else {
@@ -79,8 +84,8 @@ function clearLocalStorage() {
  * on end handler
  */
 function onEnd() {
-    log('end');
     getDataFromStorage(['todayEvents'], (storage) => {
+        log('end', storage.todayEvents);
         const filtered = storage.todayEvents
             .filter(droppingBookiesGreaterEqual15Percents);
         log('result', filtered);
@@ -108,10 +113,12 @@ function onErrorNoTodayEvents() {
  * @param data
  */
 function log(message, data) {
-        if (LOG_ENABLED) {
-            alert(message);
-            console.log(message, data);
-        }
+    if (LOG_ENABLED) {
+        console.log(message, data);
+    }
+    if (ALERT_ENABLED) {
+        alert(message);
+    }
 }
 
 
