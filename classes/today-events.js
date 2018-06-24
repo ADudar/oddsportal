@@ -17,10 +17,12 @@ class TodayEvents {
      * constructor
      * @param skipNoBetsEvents
      * @param skipResultsWithScores
+     * @param skipLiveEvents
      */
-    constructor(skipNoBetsEvents = true, skipResultsWithScores = true) {
+    constructor(skipNoBetsEvents = true, skipResultsWithScores = true, skipLiveEvents = true) {
         this.skipNoBetsEvents = skipNoBetsEvents;
         this.skipResultsWithScores = skipResultsWithScores;
+        this.skipLiveEvents = skipLiveEvents;
         /**
          * events selector
          * @type {string}
@@ -101,6 +103,14 @@ class TodayEvents {
     }
 
     /**
+     * getter is live
+     * @returns {*|{}|Uint8Array|jQuery[]|Int32Array|Uint16Array}
+     */
+    get isLive() {
+        return this.events.map((i, el) => !!$(el).find('.live-odds-ico-prev').length)
+    }
+
+    /**
      * getter today events full object
      * @returns {Array}
      */
@@ -112,8 +122,9 @@ class TodayEvents {
         const tournaments = this.tournaments;
         const countries = this.countries;
         const resultsScores = this.resultsScores;
+        const isLive = this.isLive;
         return this.todayParticipants.toArray().reduce((prev, cur, index) => {
-            if (this.skipAndNoBets(avCoeffs1, index) || this.skipAndResultsWithScores(resultsScores, index)) {
+            if (this.skipAndNoBets(avCoeffs1, index) || this.skipAndResultsWithScores(resultsScores, index) || this.skipAndLive(isLive, index)) {
                 return prev;
             }
             prev.push({
@@ -151,5 +162,15 @@ class TodayEvents {
      */
     skipAndNoBets(avCoeffs1, index) {
         return this.skipNoBetsEvents && isNaN(avCoeffs1[index]);
+    }
+
+    /**
+     * skip event if skip flag
+     * and isLive
+     * @param isLive
+     * @param index
+     */
+    skipAndLive(isLive, index) {
+        return this.skipLiveEvents && isLive[index];
     }
 }
