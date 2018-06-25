@@ -32,13 +32,14 @@ function HandlerEventsDetails(storage) {
     if (!todayEvents) return onErrorEmptyStorage();
     if (i < count && i<5) {
         log('i', i);
-        const details = new EventDetails();
+        const details = new EventDetails(BOOKMAKERS.Pinnacle);
         todayEvents[i].maxBet1 = details.maxHistoryBet1;
         todayEvents[i].maxBet2 = details.maxHistoryBet2;
         todayEvents[i].currentBet1 = details.currentBet1;
         todayEvents[i].currentBet2 = details.currentBet2;
         todayEvents[i].openingBet1 = details.openingBet1;
         todayEvents[i].openingBet2 = details.openingBet2;
+        todayEvents[i].bookmaker = details.bookmaker;
         i++;
         setDataToStorage({i, todayEvents});
         navigateEventDetailsPage(todayEvents, i);
@@ -124,6 +125,4 @@ function log(message, data) {
 
 // TODO: rerun script in every 30 min
 // TODO: send notification to email
-// TODO: parse different bookmakers ? refactor
-// TODO: last event current bet's doesn't show
-// TODO: why max bet opening odds ignored ?
+// TODO: don't parse first bookmaker ?

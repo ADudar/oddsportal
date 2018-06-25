@@ -1,9 +1,23 @@
 /**
+ * bookmakers list object
+ * @type {{Pinnacle: string}}
+ */
+const BOOKMAKERS = {
+    Pinnacle: 'pinnacle',
+    BetAtHome: 'bet-at-home'
+};
+
+/**
  * event details object
  */
 class EventDetails {
 
-    constructor() {
+    /**
+     * DI event details
+     * @param bookmakerName which bookmaket get bets
+     */
+    constructor(bookmakerName = BOOKMAKERS.Pinnacle) {
+        this.bookmakerName = bookmakerName;
         /**
          * all average bets selector
          * @type {string}
@@ -16,21 +30,66 @@ class EventDetails {
      * getter all average bets
      * @returns {*|jQuery|HTMLElement}
      */
-    getBets(bookmakerName = 'pinnacle') {
-        if (this._bb && this._bb.length) {
-            return this._bb;
-        }
-        const bb = $(this.bookmakersSelector.replace('{0}', bookmakerName));
-        if (bb && bb.length) {
-            this._bb = bb.parent().parent().nextAll('.odds').map((i,el) => $(el).find('[onmouseover]').get());
-            return this._bb;
-        }
-        if (this._bets) {
-            return this._bets;
-        }
-        const bets = $(this.betsSelector).slice(0,2);
-        this._bets = bets;
-        return bets;
+    getBets() {
+        return this.bookmakerBets || this.firstBets;
+    }
+
+    /**
+     * getter bookmaker locator by name
+     * @returns {string}
+     */
+    get bookmakerLocator() {
+        return this.bookmakersSelector.replace('{0}', this.bookmakerName);
+    }
+
+    /**
+     * getter cached selected bookmaker bets
+     * @returns {*|Uint8Array|(*|jQuery)[]|Int32Array|Uint16Array}
+     */
+    get cachedBookmakerBets() { // get cached bookmaker bets
+        return this._bb;
+    }
+
+    /**
+     * getter selected bookmaker bets
+     * @returns {*}
+     */
+    get bookmakerBets() { // get selected bookmaker bets
+        return this.cachedBookmakerBets ? this.cachedBookmakerBets :
+            $(this.bookmakerLocator).length ?
+            this._bb = $(this.bookmakerLocator).parent().parent().nextAll('.odds').map((i, el) => $(el).find('[onmouseover]').get()) : null;
+    }
+
+    /**
+     * getter bookmaker name
+     * @returns {string|*}
+     */
+    get bookmaker() {
+        return $(this.bookmakerLocator).length ? this.bookmakerName : this.firstBookmakerName;
+    }
+
+    /**
+     * getter first bookmaker name
+     * @returns {string}
+     */
+    get firstBookmakerName() {
+        return this.firstBets.first().parent().prev().text().trim().toLowerCase();
+    }
+
+    /**
+     * getter cached first bookmaker bets
+     * @returns {Buffer|*|T[]|SharedArrayBuffer|Uint8ClampedArray|Uint32Array}
+     */
+    get cachedFirstBets() {  // get cached first bets
+        return this._bets;
+    }
+
+    /**
+     * getter first bookmaker bets
+     * @returns {*}
+     */
+    get firstBets() { // get first bets
+        return this.cachedFirstBets ? this.cachedFirstBets : this._bets = $(this.betsSelector).slice(0, 2);
     }
 
     /**
@@ -66,7 +125,7 @@ class EventDetails {
      * @returns {*}
      */
     get openingBet1() {
-        return this.getOpeningOdds(0)
+        return this.getOpeningBets(0)
     }
 
     /**
@@ -74,7 +133,7 @@ class EventDetails {
      * @returns {*}
      */
     get openingBet2() {
-        return this.getOpeningOdds(1);
+        return this.getOpeningBets(1);
     }
 
     /**
@@ -82,7 +141,7 @@ class EventDetails {
      * @param num
      * @returns {number}
      */
-    getOpeningOdds(num) {
+    getOpeningBets(num) {
         this.getBets().get(num).dispatchEvent(new Event('mouseover'));
         return new Tooltip().openingBets;
     }
