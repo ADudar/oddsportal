@@ -32,6 +32,6 @@ class Tooltip {
      */
     get openingBets() {
         const lastBet = +$(this._openingBets).text();
-        return lastBet ? lastBet : $(this._openingBets).prevAll('strong').first().text();
+        return lastBet ? lastBet : +$(this._openingBets).prevAll('strong').first().text();
     }
 }
