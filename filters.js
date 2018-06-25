@@ -1,8 +1,9 @@
 /**
- * filter drop >= 15%
- * @param e
+ * filter drop >= percent
+ * @param e event
+ * @param droppingPercent percent value
  * @returns {boolean}
  */
-function droppingBookiesGreaterEqual15Percents(e) {
-    return (e.maxHistoryBet1 - e.currentBet1) / (e.maxHistoryBet1 - 1) >= 0.15;
+function droppingBookiesGreaterInPercents(e, droppingPercent) {
+    return (e.openingBet1 - e.currentBet1) / (e.openingBet1 - 1) >= droppingPercent / 100;
 }

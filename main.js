@@ -88,7 +88,7 @@ function onEnd() {
     getDataFromStorage(['todayEvents'], (storage) => {
         log('end', storage.todayEvents);
         const filtered = storage.todayEvents
-            .filter(droppingBookiesGreaterEqual15Percents);
+            .filter(e => droppingBookiesGreaterInPercents(e, 5));
         log('result', filtered);
         clearLocalStorage();
     });
@@ -126,3 +126,4 @@ function log(message, data) {
 // TODO: rerun script in every 30 min
 // TODO: send notification to email
 // TODO: don't parse first bookmaker ?
+// TODO: parse all bookmakers ?
