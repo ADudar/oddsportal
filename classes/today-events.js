@@ -4,6 +4,26 @@
 class TodayEvents {
 
     /**
+     * get today date in format yyyymmdd
+     * @returns {string}
+     */
+    static get todayDate() {
+        const today = new Date();
+        const dd = today.getDate();
+        const mm = today.getMonth() + 1; //January is 0!
+        const yyyy = today.getFullYear();
+        return `${yyyy}${mm < 10 ? '0' + mm : mm}${dd < 10 ? '0' + dd : dd}`;
+    }
+
+    /**
+     *
+     * @returns {string}
+     */
+    static get todayTennisEventsUrl() {
+        return `http://www.oddsportal.com/matches/tennis/${TodayEvents.todayDate}`
+    }
+
+    /**
      * check if today events page opened
      * @returns {boolean | jQuery}
      */

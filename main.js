@@ -30,7 +30,7 @@ function startScraping() {
 function HandlerEventsDetails(storage) {
     let {count, i, todayEvents} = storage;
     if (!todayEvents) return onErrorEmptyStorage();
-    if (i < count && i<5) {
+    if (i < count) {
         log('i', i);
         const details = new EventDetails(BOOKMAKERS.Pinnacle);
         todayEvents[i].maxBet1 = details.maxHistoryBet1;
@@ -88,9 +88,10 @@ function onEnd() {
     getDataFromStorage(['todayEvents'], (storage) => {
         log('end', storage.todayEvents);
         const filtered = storage.todayEvents
-            .filter(e => droppingBookiesGreaterInPercents(e, 5));
+            .filter(e => droppingBookiesGreaterInPercents(e, 15));
         log('result', filtered);
         clearLocalStorage();
+        reloadScriptInterval(30);
     });
 }
 
@@ -122,8 +123,17 @@ function log(message, data) {
     }
 }
 
+/**
+ * reload script interval in  minutes
+ * @param timeout in minutes
+ */
+function reloadScriptInterval(timeout = 30) {
+    const intId = setInterval(() => {
+        clearInterval(intId);
+        window.location.href = TodayEvents.todayTennisEventsUrl;
+    }, timeout * 60 * 1000);
+}
 
-// TODO: rerun script in every 30 min
 // TODO: send notification to email
 // TODO: don't parse first bookmaker ?
 // TODO: parse all bookmakers ?
