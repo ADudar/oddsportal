@@ -41,8 +41,7 @@ function HandlerEventsDetails(storage) {
         todayEvents[i].openingBet1 = details.openingBet1;
         todayEvents[i].openingBet2 = details.openingBet2;
         todayEvents[i].bookmaker = details.bookmaker;
-        i++;
-        setDataToStorage({i, todayEvents});
+        setDataToStorage({i: i + 1, todayEvents});
         navigateEventDetailsPage(todayEvents, i);
     } else {
         onEnd();
