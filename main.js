@@ -1,5 +1,6 @@
 const LOG_ENABLED = true;
 const ALERT_ENABLED = false;
+const DEBUG_ENABLED = false;
 
 $(window).on('load', startScraping);
 
@@ -120,6 +121,9 @@ function log(message, data) {
     }
     if (ALERT_ENABLED) {
         alert(message);
+    }
+    if (DEBUG_ENABLED) {
+        debugger;
     }
 }
 
