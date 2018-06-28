@@ -98,8 +98,7 @@ function publish(events) {
 function onEnd() {
     getDataFromStorage(['todayEvents'], (storage) => {
         log('end', storage.todayEvents);
-        const filtered = storage.todayEvents
-            .filter(e => droppingBookiesGreaterInPercents(e, 15));
+        const filtered = storage.todayEvents.filter(e => droppingBookiesGreaterInPercents(e, 15));
         log('result', filtered);
         publish(filtered);
         clearLocalStorage();
