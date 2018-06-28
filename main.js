@@ -81,6 +81,17 @@ function clearLocalStorage() {
     chrome.storage.local.clear();
 }
 
+function publish(events) {
+    const apiUrl = `https://api.telegram.org`;
+    const botId = `bot614219243:AAEK0CXtEVNX3yBcKhRAczTTWTDaLPvv5v8`;
+    const chatId = `-1001153954489`;
+    const message = JSON.stringify(events);
+    const url = `${apiUrl}/${botId}/sendMessage?chat_id=${chatId}&text=${message}`;
+    const data = null;
+    const response = (response) => log(`request success: ${response.ok}`, response);
+    $.get(url, data, response)
+}
+
 /**
  * on end handler
  */
@@ -90,6 +101,7 @@ function onEnd() {
         const filtered = storage.todayEvents
             .filter(e => droppingBookiesGreaterInPercents(e, 15));
         log('result', filtered);
+        publish(filtered);
         clearLocalStorage();
         reloadScriptInterval(30);
     });
@@ -137,6 +149,5 @@ function reloadScriptInterval(timeout = 30) {
     }, timeout * 60 * 1000);
 }
 
-// TODO: send notification to email
 // TODO: don't parse first bookmaker ?
 // TODO: parse all bookmakers ?
