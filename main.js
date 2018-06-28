@@ -81,15 +81,34 @@ function clearLocalStorage() {
     chrome.storage.local.clear();
 }
 
-function publish(events) {
+function publish(message) {
     const apiUrl = `https://api.telegram.org`;
     const botId = `bot614219243:AAEK0CXtEVNX3yBcKhRAczTTWTDaLPvv5v8`;
     const chatId = `-1001153954489`;
-    const message = JSON.stringify(events);
     const url = `${apiUrl}/${botId}/sendMessage?chat_id=${chatId}&text=${message}`;
     const data = null;
     const response = (response) => log(`request success: ${response.ok}`, response);
     $.get(url, data, response)
+}
+
+/**
+ * format message for telegram
+ * @param events
+ */
+function formatMessage(events) {
+    const N = '\n';  //new line char
+    const E = '';  //empty char
+    return events.map(e =>
+        encodeURIComponent(`${
+            E}Страна: ${e.country}${
+            N}Турнир: ${e.tournament}${
+            N}Начало: ${e.time}${
+            N}Участники: ${e.participants}${
+            N}БК: ${e.bookmaker}${
+            N}Коэффициенты: ${e.currentBet1 + ':' + e.currentBet2}${
+            N}Ссылка: ${e.link}${N}${N}`
+        )
+    ).join(E);
 }
 
 /**
@@ -98,9 +117,10 @@ function publish(events) {
 function onEnd() {
     getDataFromStorage(['todayEvents'], (storage) => {
         log('end', storage.todayEvents);
-        const filtered = storage.todayEvents.filter(e => droppingBookiesGreaterInPercents(e, 15));
-        log('result', filtered);
-        publish(filtered);
+        const filteredEvents = storage.todayEvents
+            .filter(e => droppingBookiesGreaterInPercents(e, 15));
+        log('result', filteredEvents);
+        publish(formatMessage(filteredEvents));
         clearLocalStorage();
         reloadScriptInterval(30);
     });
@@ -150,3 +170,5 @@ function reloadScriptInterval(timeout = 30) {
 
 // TODO: don't parse first bookmaker ?
 // TODO: parse all bookmakers ?
+// TODO: fancy formatting ?
+// TODO: isLive field missed ?
