@@ -20,17 +20,17 @@ class TodayEvents {
      * @returns {string}
      */
     static get todayTennisEventsUrl() {
-        return `http://www.oddsportal.com/matches/tennis/${TodayEvents.todayDate}`
+        return `http://www.oddsportal.com/matches/tennis/${TodayEvents.todayDate}/`
     }
 
     /**
      * check if today events page opened
      * @returns {boolean | jQuery}
      */
-    static get isTodayEventsPage() {
-        const todayTitleSelector = '#col-content h1';
-        const includesText = 'Today';
-        return $(todayTitleSelector).first().text().includes(includesText);
+    static get isTodayTennisEventsPage() {
+        const todayUrl = TodayEvents.todayTennisEventsUrl;
+        const curUrl = window.location.href;
+        return todayUrl === curUrl;
     }
 
     /**

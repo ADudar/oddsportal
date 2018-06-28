@@ -8,7 +8,7 @@ $(window).on('load', startScraping);
  * run script
  */
 function startScraping() {
-    if (TodayEvents.isTodayEventsPage) {
+    if (TodayEvents.isTodayTennisEventsPage) {
         log('script started');
         clearLocalStorage();
         const todayEvents = new TodayEvents().todayEvents, i = 0;
