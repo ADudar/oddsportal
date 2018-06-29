@@ -155,7 +155,8 @@ class TodayEvents {
                 averageBet2: +avCoeffs2[index],
                 tournament: tournaments[index],
                 country: countries[index],
-                resultScore: resultsScores[index]
+                resultScore: resultsScores[index],
+                isLive: isLive[index]
             });
             return prev;
         }, [])
