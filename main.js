@@ -31,7 +31,6 @@ function startScraping() {
 function HandlerEventsDetails(storage) {
     let {count, i, todayEvents} = storage;
     if (!todayEvents) return onErrorEmptyStorage();
-    if (i < count) {
         log('i', i);
         const details = new EventDetails(BOOKMAKERS.Pinnacle);
         todayEvents[i].maxBet1 = details.maxHistoryBet1;
@@ -43,7 +42,8 @@ function HandlerEventsDetails(storage) {
         todayEvents[i].bookmaker = details.bookmaker;
         i++;
         setDataToStorage({i, todayEvents});
-        i < count ? navigateEventDetailsPage(todayEvents, i) : onEnd();
+    if (i < count) {
+        navigateEventDetailsPage(todayEvents, i);
     } else {
         onEnd();
     }
@@ -172,4 +172,3 @@ function reloadScriptInterval(timeout = 30) {
 // TODO: don't parse first bookmaker ?
 // TODO: parse all bookmakers ?
 // TODO: fancy formatting ?
-// TODO: isLive field missed ?
