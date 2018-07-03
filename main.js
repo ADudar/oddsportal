@@ -97,11 +97,17 @@ function publish(message) {
     $.get(url, data, response)
 }
 
+function publishMessages(messages, portion = 5) {
+    for (let i = 0; i < messages.length; i += portion) {
+        publish(messages.slice(i, i + portion).join(`\n`));
+    }
+}
+
 /**
  * format message for telegram
  * @param events
  */
-function formatMessage(events) {
+function formatEvents(events) {
     const N = '\n';  //new line char
     const E = '';  //empty char
     return events.map(e =>
@@ -116,7 +122,7 @@ function formatMessage(events) {
             N}Просадка: ${e.droppingBookies * 100}${
             N}Ссылка: ${e.link}${N}${N}`
         )
-    ).join(E);
+    );
 }
 
 /**
@@ -129,7 +135,7 @@ function onEnd() {
             .filter(e => droppingBookiesGreaterInPercents(e, 15))
             .filter(e => e.bookmaker === BOOKMAKERS.Pinnacle);
         log('result', filteredEvents);
-        publish(formatMessage(filteredEvents));
+        publishMessages(formatEvents(filteredEvents), 5);
         clearLocalStorage();
         reloadScriptInterval(30);
     });
