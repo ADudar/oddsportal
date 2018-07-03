@@ -23,9 +23,9 @@
       ],
       "js": [
         "jquery.js",
-        "classes/tooltip.js",
-        "classes/event-details.js",
-        "classes/today-events.js",
+        "models/tooltip.js",
+        "models/event-details.js",
+        "models/today-events.js",
         "filters.js",
         "main.js"
       ]
