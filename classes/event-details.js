@@ -57,7 +57,8 @@ class EventDetails {
     get bookmakerBets() { // get selected bookmaker bets
         return this.cachedBookmakerBets ? this.cachedBookmakerBets :
             $(this.bookmakerLocator).length ?
-            this._bb = $(this.bookmakerLocator).parent().parent().nextAll('.odds').map((i, el) => $(el).find('[onmouseover]').get()) : null;
+                this._bb = $(this.bookmakerLocator).parent().parent().nextAll('.odds')
+                    .map((i, el) => $(el).find('[onmouseover]').get()) : null;
     }
 
     /**
@@ -116,8 +117,8 @@ class EventDetails {
      */
     getMaxHistoryBet(num) {
         this.getBets().get(num).dispatchEvent(new Event('mouseover'));
-        const coeffs = new Tooltip().coeffs;
-        return Math.max(...coeffs);
+        const historyBets = new Tooltip().historyBets;
+        return Math.max(...historyBets);
     }
 
     /**
