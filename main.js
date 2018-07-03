@@ -31,8 +31,10 @@ function startScraping() {
 function HandlerEventsDetails(storage) {
     let {count, i, todayEvents} = storage;
     if (!todayEvents) return onErrorEmptyStorage();
-        log('i', i);
-        const details = new EventDetails(BOOKMAKERS.Pinnacle);
+    log('i', i);
+    const details = new EventDetails(BOOKMAKERS.Pinnacle);
+    if (details.getBets().length) {
+        todayEvents[i].noBets = false;
         todayEvents[i].maxBet1 = details.maxHistoryBet1;
         todayEvents[i].maxBet2 = details.maxHistoryBet2;
         todayEvents[i].currentBet1 = details.currentBet1;
@@ -40,8 +42,11 @@ function HandlerEventsDetails(storage) {
         todayEvents[i].openingBet1 = details.openingBet1;
         todayEvents[i].openingBet2 = details.openingBet2;
         todayEvents[i].bookmaker = details.bookmaker;
-        i++;
-        setDataToStorage({i, todayEvents});
+    } else {
+        todayEvents[i].noBets = true;
+    }
+    i++;
+    setDataToStorage({i, todayEvents});
     if (i < count) {
         navigateEventDetailsPage(todayEvents, i);
     } else {
