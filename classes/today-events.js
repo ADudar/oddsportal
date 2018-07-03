@@ -71,7 +71,10 @@ class TodayEvents {
      * @returns {*|{}|Uint8Array|any[]|Int32Array|Uint16Array}
      */
     get todayLinks() {
-        return this.events.find('a:last-child').map((i, el) => el.href);
+        return this.events.map((i, el) => {
+            const a = $(el).find('a:last-child');
+            return a.length ? a[0].href : ''
+        })
     }
 
     /**
