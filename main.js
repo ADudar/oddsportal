@@ -111,7 +111,9 @@ function formatMessage(events) {
             N}Начало: ${e.time}${
             N}Участники: ${e.participants}${
             N}БК: ${e.bookmaker}${
-            N}Коэффициенты: ${e.currentBet1 + ':' + e.currentBet2}${
+            N}Начальные коэффициенты: ${e.openingBet1 + ' : ' + e.openingBet2}${
+            N}Текущине коэффициенты: ${e.currentBet1 + ' : ' + e.currentBet2}${
+            N}Просадка: ${e.droppingBookies * 100}${
             N}Ссылка: ${e.link}${N}${N}`
         )
     ).join(E);
@@ -124,7 +126,8 @@ function onEnd() {
     getDataFromStorage(['todayEvents'], (storage) => {
         log('end', storage.todayEvents);
         const filteredEvents = storage.todayEvents
-            .filter(e => droppingBookiesGreaterInPercents(e, 15));
+            .filter(e => droppingBookiesGreaterInPercents(e, 15))
+            .filter(e => e.bookmaker === BOOKMAKERS.Pinnacle);
         log('result', filteredEvents);
         publish(formatMessage(filteredEvents));
         clearLocalStorage();
