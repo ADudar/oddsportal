@@ -4,7 +4,7 @@
 class Tooltip {
     constructor() {
         /**
-         * selector tooltip coeffs for event
+         * selector tooltip history bets for event
          * @type {string}
          * @private
          */
@@ -22,7 +22,7 @@ class Tooltip {
      * getter odds history array
      * @returns {*|T[]|jQuery}
      */
-    get coeffs() {
+    get historyBets() {
         return $(this._historyBets).map((i, v) => +v.innerText).toArray();
     }
 
