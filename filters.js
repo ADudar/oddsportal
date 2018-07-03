@@ -4,12 +4,12 @@
  * @param droppingPercent percent value
  * @returns {boolean}
  */
-function droppingBookiesGreaterInPercents(e, droppingPercent) {
+function droppingBetsGreaterInPercents(e, droppingPercent) {
     const dropping1 = droppingOdds(e.openingBet1, e.currentBet1);
     const dropping2 = droppingOdds(e.openingBet2, e.currentBet2);
     const isDropping1 = isDroppingOdds(e.openingBet1, e.currentBet1, droppingPercent);
     const isDropping2 = isDroppingOdds(e.openingBet2, e.currentBet2, droppingPercent);
-    return isDropping1 ? Boolean(e.droppingBookies = dropping1) : isDropping2 ? Boolean(e.droppingBookies = dropping2) : false;
+    return isDropping1 ? Boolean(e.droppingBets = dropping1) : isDropping2 ? Boolean(e.droppingBets = dropping2) : false;
 }
 
 /**

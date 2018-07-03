@@ -119,7 +119,7 @@ function formatEvents(events) {
             N}БК: ${e.bookmaker}${
             N}Начальные коэффициенты: ${e.openingBet1 + ' : ' + e.openingBet2}${
             N}Текущине коэффициенты: ${e.currentBet1 + ' : ' + e.currentBet2}${
-            N}Просадка: ${e.droppingBookies * 100}${
+            N}Просадка: ${e.droppingBets * 100}${
             N}Ссылка: ${e.link}${N}${N}`
         )
     );
@@ -132,7 +132,7 @@ function onEnd() {
     getDataFromStorage(['todayEvents'], (storage) => {
         log('end', storage.todayEvents);
         const filteredEvents = storage.todayEvents
-            .filter(e => droppingBookiesGreaterInPercents(e, 15))
+            .filter(e => droppingBetsGreaterInPercents(e, 15))
             .filter(e => e.bookmaker === BOOKMAKERS.Pinnacle);
         log('result', filteredEvents);
         publishMessages(formatEvents(filteredEvents), 5);
