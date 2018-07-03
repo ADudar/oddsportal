@@ -1,15 +1,15 @@
 {
   "manifest_version": 2,
-  "name": "Oddsportal tennis scraper",
-  "description": "Oddsportal today tennis events scraper lowering the coefficient 15%",
+  "name": "OddsPortal tennis scraper",
+  "description": "OddsPortal today tennis events scraper lowering the coefficient 15%",
   "version": "1.0",
   "browser_action": {
-    "default_icon": "icon.png",
-    "default_popup": "popup.html"
+    "default_icon": "assets/icon.png",
+    "default_popup": "popup/popup.html"
   },
   "background": {
     "scripts": [
-      "background.js"
+      "backgrounds/background.js"
     ],
     "persistent": false
   },
@@ -19,14 +19,22 @@
         "http://www.oddsportal.com/*"
       ],
       "css": [
-        "styles.css"
+        "styles/styles.css"
       ],
       "js": [
-        "jquery.js",
-        "models/tooltip.js",
+        "filters/bookmakerName.js",
+        "filters/droppingBets.js",
+        "libs/jquery.js",
+        "models/bookmakers.js",
         "models/event-details.js",
         "models/today-events.js",
-        "filters.js",
+        "models/tooltip.js",
+        "scripts/tennis-scraper.js",
+        "utils/error-handler.js",
+        "utils/logger.js",
+        "utils/script-reloader.js",
+        "utils/storage-helper.js",
+        "utils/telegram-publisher.js",
         "main.js"
       ]
     }

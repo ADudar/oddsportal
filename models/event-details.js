@@ -1,13 +1,4 @@
 /**
- * bookmakers list object
- * @type {{Pinnacle: string}}
- */
-const BOOKMAKERS = {
-    Pinnacle: 'pinnacle',
-    BetAtHome: 'bet-at-home'
-};
-
-/**
  * event details object
  */
 class EventDetails {
@@ -24,6 +15,15 @@ class EventDetails {
          */
         this.betsSelector = '.table-container:first-child .odds [onmouseover]';
         this.bookmakersSelector = `.table-container:first-child .lo .name2[href*='{0}']`;
+    }
+
+    /**
+     * navigate to nextIndex events details page
+     * @param todayEvents
+     * @param nextIndex
+     */
+    static navigateEventDetailsPage(todayEvents, nextIndex) {
+        window.location.href = todayEvents[nextIndex].link;
     }
 
     /**

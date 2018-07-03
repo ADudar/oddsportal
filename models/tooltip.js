@@ -2,6 +2,10 @@
  * tooltip object
  */
 class Tooltip {
+
+    /**
+     * set locators
+     */
     constructor() {
         /**
          * selector tooltip history bets for event
