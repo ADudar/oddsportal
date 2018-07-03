@@ -119,10 +119,19 @@ function formatEvents(events) {
             N}БК: ${e.bookmaker}${
             N}Начальные коэффициенты: ${e.openingBet1 + ' : ' + e.openingBet2}${
             N}Текущине коэффициенты: ${e.currentBet1 + ' : ' + e.currentBet2}${
-            N}Просадка: ${e.droppingBets * 100}${
+            N}Просадка: ${round(e.droppingBets * 100)}${
             N}Ссылка: ${e.link}${N}${N}`
         )
     );
+}
+
+/**
+ * round two decimal places
+ * @param b
+ * @returns {number}
+ */
+function round(b) {
+    return Math.round(b * 100) / 100;
 }
 
 /**
