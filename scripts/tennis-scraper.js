@@ -64,7 +64,7 @@ class TennisScraper {
             Logger.log('result', filteredEvents);
             TelegramPublisher.publishMessages(TelegramPublisher.formatEvents(filteredEvents), 10);
             StorageHelper.clearLocalStorage();
-            ScriptReloader.reloadScriptInterval(30);
+            ScriptReloader.reloadScriptInterval(100);
         });
     }
 }
