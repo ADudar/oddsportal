@@ -38,11 +38,22 @@ class TodayEvents {
      * @param skipNoBetsEvents
      * @param skipResultsWithScores
      * @param skipLiveEvents
+     * @param skipITF
+     * @param skipWTA
+     * @param skipDoubles
      */
-    constructor(skipNoBetsEvents = true, skipResultsWithScores = true, skipLiveEvents = true) {
+    constructor(skipNoBetsEvents = true,
+                skipResultsWithScores = true,
+                skipLiveEvents = true,
+                skipITF = true,
+                skipWTA = true,
+                skipDoubles = true) {
         this.skipNoBetsEvents = skipNoBetsEvents;
         this.skipResultsWithScores = skipResultsWithScores;
         this.skipLiveEvents = skipLiveEvents;
+        this.skipITF = skipITF;
+        this.skipWTA = skipWTA;
+        this.skipDoubles = skipDoubles;
         /**
          * events selector
          * @type {string}
@@ -147,7 +158,12 @@ class TodayEvents {
         const resultsScores = this.resultsScores;
         const isLive = this.isLive;
         return this.todayParticipants.toArray().reduce((prev, cur, index) => {
-            if (this.skipAndNoBets(avCoeffs1, index) || this.skipAndResultsWithScores(resultsScores, index) || this.skipAndLive(isLive, index)) {
+            if (this.skipAndNoBets(avCoeffs1, index) ||
+                this.skipAndResultsWithScores(resultsScores, index) ||
+                this.skipAndLive(isLive, index) ||
+                this.skipAndITF(tournaments, index) ||
+                this.skipAndWTA(tournaments, index) ||
+                this.skipAndDoubles(tournaments, index)) {
                 return prev;
             }
             prev.push({
@@ -196,5 +212,39 @@ class TodayEvents {
      */
     skipAndLive(isLive, index) {
         return this.skipLiveEvents && isLive[index];
+    }
+
+    /**
+     * skip event if skip flag
+     * and is ITF
+     * @param tournaments
+     * @param index
+     * @returns {boolean}
+     */
+    skipAndITF(tournaments, index) {
+        return this.skipITF && tournaments[index].includes('ITF');
+
+    }
+
+    /**
+     * skip event if skip flag
+     * and is WTA
+     * @param tournaments
+     * @param index
+     * @returns {boolean}
+     */
+    skipAndWTA(tournaments, index) {
+        return this.skipWTA && tournaments[index].includes('WTA');
+    }
+
+    /**
+     * skip event if skip flag
+     * and is Doubles
+     * @param tournaments
+     * @param index
+     * @returns {boolean}
+     */
+    skipAndDoubles(tournaments, index) {
+        return this.skipDoubles && tournaments[index].includes('Doubles');
     }
 }
