@@ -19,11 +19,11 @@ class EventDetails {
 
     /**
      * navigate to nextIndex events details page
-     * @param todayEvents
+     * @param events
      * @param nextIndex
      */
-    static navigateEventDetailsPage(todayEvents, nextIndex) {
-        window.location.href = todayEvents[nextIndex].link;
+    static navigateEventDetailsPage(events, nextIndex) {
+        window.location.href = events[nextIndex].link;
     }
 
     /**

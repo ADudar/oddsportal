@@ -7,9 +7,6 @@ class ScriptReloader {
      * @param timeoutInMin timeout in minutes
      */
     static reloadScriptInterval(timeoutInMin = 30) {
-        const intId = setInterval(() => {
-            clearInterval(intId);
-            window.location.href = TodayEvents.todayTennisEventsUrl;
-        }, timeoutInMin * 60 * 1000);
+        setInterval(() => window.location.href = Events.todayTennisEventsUrl, timeoutInMin * 60 * 1000);
     }
 }

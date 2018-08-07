@@ -1,26 +1,64 @@
 /**
- * today events object
+ * Events object
  */
-class TodayEvents {
+class Events {
+
+    /**
+     * today date
+     * @returns {Date}
+     * @constructor
+     */
+    static get TodayDate() {
+        return new Date();
+    }
+
+    /**
+     * tomorrow date
+     * @constructor
+     */
+    static get TomorrowDate() {
+        return new Date(Events.TodayDate.getTime() + (24 * 60 * 60 * 1000));
+    }
+
+    static get TennisBaseUrl() {
+        return `http://www.oddsportal.com/matches/tennis/`;
+    }
 
     /**
      * get today date in format yyyymmdd
      * @returns {string}
      */
-    static get todayDate() {
-        const today = new Date();
-        const dd = today.getDate();
-        const mm = today.getMonth() + 1; //January is 0!
-        const yyyy = today.getFullYear();
+    static get todayFullDate() {
+        const dd = Events.TodayDate.getDate();
+        const mm = Events.TodayDate.getMonth() + 1; //January is 0!
+        const yyyy = Events.TodayDate.getFullYear();
         return `${yyyy}${mm < 10 ? '0' + mm : mm}${dd < 10 ? '0' + dd : dd}`;
     }
 
     /**
-     *
+     * get tomorrow date in format yyyymmdd
+     */
+    static get tomorrowFullDate() {
+        const dd = Events.TomorrowDate.getDate();
+        const mm = Events.TomorrowDate.getMonth() + 1; //January is 0!
+        const yyyy = Events.TomorrowDate.getFullYear();
+        return `${yyyy}${mm < 10 ? '0' + mm : mm}${dd < 10 ? '0' + dd : dd}`;
+    }
+
+    /**
+     * getter today date tennis events url
      * @returns {string}
      */
     static get todayTennisEventsUrl() {
-        return `http://www.oddsportal.com/matches/tennis/${TodayEvents.todayDate}/`
+        return `${Events.TennisBaseUrl}${Events.todayFullDate}/`
+    }
+
+    /**
+     * getter tomorrow date tennis events url
+     * @returns {string}
+     */
+    static get tomorrowTennisEventsUrl() {
+        return `${Events.TennisBaseUrl}${Events.tomorrowFullDate}/`
     }
 
     /**
@@ -28,9 +66,19 @@ class TodayEvents {
      * @returns {boolean | jQuery}
      */
     static get isTodayTennisEventsPage() {
-        const todayUrl = TodayEvents.todayTennisEventsUrl;
+        const todayUrl = Events.todayTennisEventsUrl;
         const curUrl = window.location.href;
         return todayUrl === curUrl;
+    }
+
+    /**
+     * check if tomorrow events page opened
+     * @returns {boolean}
+     */
+    static get isTomorrowTennisEventsPage() {
+        const tomorrowUrl = Events.tomorrowTennisEventsUrl;
+        const curUrl = window.location.href;
+        return tomorrowUrl === curUrl;
     }
 
     /**
@@ -73,7 +121,7 @@ class TodayEvents {
      * getter event participants
      * @returns {*|{}|Uint8Array|string[]|Int32Array|Uint16Array}
      */
-    get todayParticipants() {
+    get participants() {
         return this.events.map((i, el) => el.innerText);
     }
 
@@ -81,7 +129,7 @@ class TodayEvents {
      * getter event details link
      * @returns {*|{}|Uint8Array|any[]|Int32Array|Uint16Array}
      */
-    get todayLinks() {
+    get links() {
         return this.events.map((i, el) => {
             const a = $(el).find('a:last-child');
             return a.length ? a[0].href : ''
@@ -89,10 +137,10 @@ class TodayEvents {
     }
 
     /**
-     * getter today event time
+     * getter event time
      * @returns {*|{}|Uint8Array|string[]|Int32Array|Uint16Array}
      */
-    get todayTimes() {
+    get times() {
         return this.events.map((i, el) => el.previousSibling.innerText);
     }
 
@@ -145,19 +193,19 @@ class TodayEvents {
     }
 
     /**
-     * getter today events full object
+     * getter events full object
      * @returns {Array}
      */
-    get todayEvents() {
-        const links = this.todayLinks.toArray();
-        const times = this.todayTimes.toArray();
+    get Events() {
+        const links = this.links.toArray();
+        const times = this.times.toArray();
         const avCoeffs1 = this.averageCoefParticipant1.toArray();
         const avCoeffs2 = this.averageCoefParticipant2.toArray();
         const tournaments = this.tournaments;
         const countries = this.countries;
         const resultsScores = this.resultsScores;
         const isLive = this.isLive;
-        return this.todayParticipants.toArray().reduce((prev, cur, index) => {
+        return this.participants.toArray().reduce((prev, cur, index) => {
             if (this.skipAndNoBets(avCoeffs1, index) ||
                 this.skipAndResultsWithScores(resultsScores, index) ||
                 this.skipAndLive(isLive, index) ||

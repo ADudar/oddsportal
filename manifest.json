@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
   "name": "OddsPortal tennis scraper",
-  "description": "OddsPortal today tennis events scraper lowering the coefficient 15%",
-  "version": "1.0",
+  "description": "OddsPortal tennis events scraper lowering the coefficient 15%",
+  "version": "1.0.1",
   "browser_action": {
     "default_icon": "assets/icon.png",
     "default_popup": "popup/popup.html"
@@ -27,7 +27,7 @@
         "libs/jquery.js",
         "models/bookmakers.js",
         "models/event-details.js",
-        "models/today-events.js",
+        "models/events.js",
         "models/tooltip.js",
         "scripts/tennis-scraper.js",
         "utils/error-handler.js",

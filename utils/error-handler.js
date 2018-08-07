@@ -10,9 +10,9 @@ class ErrorHandler {
     }
 
     /**
-     * error handler no today events
+     * error handler no events
      */
-    static onErrorNoTodayEvents() {
-        Logger.log('no today events, exit');
+    static onErrorNoEvents() {
+        Logger.log('no events, exit');
     }
 }
