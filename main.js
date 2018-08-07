@@ -1,7 +1,1 @@
-$(window).on('load', startScraping);
-
-function startScraping() {
-    console.log('start scraping');
-
-}
-
+$(window).on('load', TennisScraper.startScraping);

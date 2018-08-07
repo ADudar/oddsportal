@@ -1,1 +1,0 @@
-// window.addEventListener('load',() => console.log('hello from background.js'));
