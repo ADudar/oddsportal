@@ -8,11 +8,11 @@ class TelegramPublisher {
     }
 
     static get botId() {
-        return `bot614219243:AAEK0CXtEVNX3yBcKhRAczTTWTDaLPvv5v8`;
+        return TelegramConfig.botId;
     }
 
     static get chatId() {
-        return `-1001153954489`;
+        return TelegramConfig.chatId;
     }
 
     /**
@@ -63,12 +63,10 @@ class TelegramPublisher {
 
     /**
      * round two decimal places
-     * @param b
+     * @param oddsDrop
      * @returns {number}
      */
-    static round(b) {
-        return Math.round(b * 100) / 100;
+    static round(oddsDrop) {
+        return Math.round(oddsDrop * 100) / 100;
     }
-
-
 }

@@ -30,6 +30,7 @@
         "models/events.js",
         "models/tooltip.js",
         "scripts/tennis-scraper.js",
+        "telegram-config.js",
         "utils/error-handler.js",
         "utils/logger.js",
         "utils/script-reloader.js",
