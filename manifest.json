@@ -24,6 +24,7 @@
       "js": [
         "filters/bookmakerName.js",
         "filters/droppingBets.js",
+        "filters/minMaxValueCoefficients.js",
         "libs/jquery.js",
         "models/bookmakers.js",
         "models/event-details.js",

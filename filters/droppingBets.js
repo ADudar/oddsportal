@@ -1,15 +1,17 @@
 /**
  * filter drop >= percent
- * @param e event
+ * @param event
  * @param droppingPercent percent value
  * @returns {boolean}
  */
-function droppingBetsGreaterInPercents(e, droppingPercent) {
-    const dropping1 = droppingOdds(e.openingBet1, e.currentBet1);
-    const dropping2 = droppingOdds(e.openingBet2, e.currentBet2);
-    const isDropping1 = isDroppingOdds(e.openingBet1, e.currentBet1, droppingPercent);
-    const isDropping2 = isDroppingOdds(e.openingBet2, e.currentBet2, droppingPercent);
-    return isDropping1 ? Boolean(e.droppingBets = dropping1) : isDropping2 ? Boolean(e.droppingBets = dropping2) : false;
+function droppingBetsGreaterInPercents(event, droppingPercent) {
+    const droppingFirst = droppingOdds(event.openingBet1, event.currentBet1);
+    const droppingSecond = droppingOdds(event.openingBet2, event.currentBet2);
+    const isDroppingFirst = isDroppingOdds(event.openingBet1, event.currentBet1, droppingPercent);
+    const isDroppingSecond = isDroppingOdds(event.openingBet2, event.currentBet2, droppingPercent);
+    event.isDroppingFirst = isDroppingFirst; //TODO: assign properties in parseEventsDetails fn
+    event.isDroppingSecond = isDroppingSecond;
+    return isDroppingFirst ? Boolean(event.droppingBets = droppingFirst) : isDroppingSecond ? Boolean(event.droppingBets = droppingSecond) : false;
 }
 
 /**

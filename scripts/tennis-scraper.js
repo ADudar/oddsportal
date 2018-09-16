@@ -60,7 +60,8 @@ class TennisScraper {
             Logger.log('end', events);
             const filteredEvents = events
                 .filter(event => droppingBetsGreaterInPercents(event, 15))
-                .filter(event => bookmakerName(event, BOOKMAKERS.Pinnacle));
+                .filter(event => bookmakerName(event, BOOKMAKERS.Pinnacle))
+                .filter(event => minMaxValueCoefficients(event.isDroppingFirst ? event.currentBet1 : event.currentBet2));
             Logger.log('result', filteredEvents);
             TelegramPublisher.publishMessages(TelegramPublisher.formatEvents(filteredEvents));
             StorageHelper.clearLocalStorage();
