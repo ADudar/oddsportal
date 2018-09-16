@@ -56,15 +56,15 @@ class TennisScraper {
      * on end handler
      */
     static onEnd() {
-        StorageHelper.getDataFromStorage(['events'], (storage) => {
-            Logger.log('end', storage.events);
-            const filteredEvents = storage.events
-                .filter(e => droppingBetsGreaterInPercents(e, 15))
-                .filter(e => bookmakerName(e, BOOKMAKERS.Pinnacle));
+        StorageHelper.getDataFromStorage(['events'], ({events}) => {
+            Logger.log('end', events);
+            const filteredEvents = events
+                .filter(event => droppingBetsGreaterInPercents(event, 15))
+                .filter(event => bookmakerName(event, BOOKMAKERS.Pinnacle));
             Logger.log('result', filteredEvents);
-            TelegramPublisher.publishMessages(TelegramPublisher.formatEvents(filteredEvents), 10);
+            TelegramPublisher.publishMessages(TelegramPublisher.formatEvents(filteredEvents));
             StorageHelper.clearLocalStorage();
-            ScriptReloader.reloadScriptInterval(100);
+            ScriptReloader.reloadScriptIntervalInMinutes(60 * 2);
         });
     }
 }

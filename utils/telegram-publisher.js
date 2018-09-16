@@ -33,7 +33,7 @@ class TelegramPublisher {
      * @param messages
      * @param portion
      */
-    static publishMessages(messages, portion = 5) {
+    static publishMessages(messages, portion = 10) {
         for (let i = 0; i < messages.length; i += portion) {
             TelegramPublisher.publish(messages.slice(i, i + portion).join(`\n`));
         }
