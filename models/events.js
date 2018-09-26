@@ -82,6 +82,20 @@ class Events {
     }
 
     /**
+     * return first and second participant object
+     * @param participants
+     * @returns {*}
+     */
+    static getParticipantsObject(participants) {
+        if (participants.includes('-')) {
+            const limitReturnedItems = 2;
+            let [participant1, participant2] = participants.split('-', limitReturnedItems);
+            return {participant1, participant2};
+        }
+        return {participants};
+    }
+
+    /**
      * constructor
      * @param skipNoBetsEvents
      * @param skipResultsWithScores
@@ -216,6 +230,7 @@ class Events {
             }
             prev.push({
                 participants: cur,
+                ...Events.getParticipantsObject(cur),
                 link: links[index],
                 time: times[index],
                 averageBet1: +avCoeffs1[index],

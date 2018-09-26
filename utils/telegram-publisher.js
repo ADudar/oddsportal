@@ -72,20 +72,18 @@ class TelegramPublisher {
         return `<${tag}>${text}</${tag}>`;
     }
 
+    /**
+     * wrap to bold tag participant
+     * @param event
+     * @returns {string}
+     * @constructor
+     */
     static ToBoldDroppingBetsParticipant(event) {
-        const {participants} = event;
-        if (participants.includes('-')) {
-            const limitReturnedItems = 2;
-            let [participant1, participant2] = participants.split('-', limitReturnedItems);
-            if (event.isDroppingFirst) {
-                participant1 = TelegramPublisher.WrapToTag(participant1, 'b');
-            }
-            else {
-                participant2 = TelegramPublisher.WrapToTag(participant2, 'b');
-            }
-            return `${participant1}-${participant2}`;
+        const boldTag = `b`;
+        if (event.isDroppingFirst) {
+            return `${TelegramPublisher.WrapToTag(event.participant1, boldTag)}-${event.participant2}`;
         }
-        return participants;
+        return `${event.participant1}-${TelegramPublisher.WrapToTag(event.participant2, boldTag)}`;
     }
 
     /**

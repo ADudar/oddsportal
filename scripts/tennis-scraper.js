@@ -40,6 +40,12 @@ class TennisScraper {
             events[i].openingBet1 = details.openingBet1;
             events[i].openingBet2 = details.openingBet2;
             events[i].bookmaker = details.bookmaker;
+            const droppingBetsHelper = new DroppingBetsHelper(events[i]);
+            events[i].isDroppingFirst = droppingBetsHelper.isDroppingFirst;
+            events[i].isDroppingSecond = droppingBetsHelper.isDroppingSecond;
+            events[i].droppingFirst = droppingBetsHelper.droppingFirst;
+            events[i].droppingSecond = droppingBetsHelper.droppingSecond;
+            events[i].droppingBets = droppingBetsHelper.droppingBets;
         } else {
             events[i].noBets = true;
         }
@@ -59,9 +65,9 @@ class TennisScraper {
         StorageHelper.getDataFromStorage(['events'], ({events}) => {
             Logger.log('end', events);
             const filteredEvents = events
-                .filter(event => droppingBetsGreaterInPercents(event, 15))
+                .filter(event => DroppingBetsHelper.isDroppingBets(event))
                 .filter(event => bookmakerName(event, BOOKMAKERS.Pinnacle))
-                .filter(event => minMaxValueCoefficients(event.isDroppingFirst ? event.currentBet1 : event.currentBet2));
+                .filter(event => minMaxValueCoefficients(event));
             Logger.log('result', filteredEvents);
             TelegramPublisher.publishMessages(TelegramPublisher.formatEvents(filteredEvents));
             StorageHelper.clearLocalStorage();

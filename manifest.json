@@ -22,12 +22,13 @@
         "styles/styles.css"
       ],
       "js": [
+        "dropping-percent-config.js",
         "filters/bookmakerName.js",
-        "filters/droppingBets.js",
         "filters/minMaxValueCoefficients.js",
         "libs/jquery.js",
         "min-max-bets-config.js",
         "models/bookmakers.js",
+        "models/dropping-bets-helper.js",
         "models/event-details.js",
         "models/events.js",
         "models/tooltip.js",
