@@ -26,6 +26,7 @@
         "filters/droppingBets.js",
         "filters/minMaxValueCoefficients.js",
         "libs/jquery.js",
+        "min-max-bets-config.js",
         "models/bookmakers.js",
         "models/event-details.js",
         "models/events.js",

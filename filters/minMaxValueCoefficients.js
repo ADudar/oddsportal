@@ -1,6 +1,8 @@
-/*
-filter dropped events by min and max value coefficients
+/**
+ * filter dropped events by min and max value coefficients
+ * @param currentBet
+ * @returns {boolean}
  */
-function minMaxValueCoefficients(currentBet, minCoefficient = 1.45, maxCoefficient = 2.1) {
-    return currentBet >= minCoefficient && currentBet <= maxCoefficient;
+function minMaxValueCoefficients(currentBet) {
+    return currentBet >= MinMaxBetsConfig.minCoefficient && currentBet <= MinMaxBetsConfig.maxCoefficient;
 }
