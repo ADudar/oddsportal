@@ -22,7 +22,7 @@ class TelegramPublisher {
     static publish(message) {
         const N = `\n`;
         const url = `${TelegramPublisher.apiUrl}/${TelegramPublisher.botId}${
-        N}/sendMessage?chat_id=${TelegramPublisher.chatId}&text=${message}`;
+        N}/sendMessage?chat_id=${TelegramPublisher.chatId}&text=${message}&parse_mode=html`;
         const data = null;
         const response = (response) => Logger.log(`request success: ${response.ok}`, response);
         $.get(url, data, response)
@@ -48,10 +48,10 @@ class TelegramPublisher {
         const E = '';  //empty char
         return events.map(e =>
             encodeURIComponent(`${
-                E}Страна: ${e.country}${
-                N}Турнир: ${e.tournament}${
+                E}Страна: ${TelegramPublisher.WrapToTag(e.country, 'b')}${
+                N}Турнир: ${TelegramPublisher.WrapToTag(e.tournament, 'b')}${
                 N}Начало: ${e.time}${
-                N}Участники: ${e.participants}${
+                N}Участники: ${TelegramPublisher.ToBoldDroppingBetsParticipant(e)}${
                 N}БК: ${e.bookmaker}${
                 N}Начальные коэффициенты: ${e.openingBet1 + ' : ' + e.openingBet2}${
                 N}Текущине коэффициенты: ${e.currentBet1 + ' : ' + e.currentBet2}${
@@ -59,6 +59,33 @@ class TelegramPublisher {
                 N}Ссылка: ${e.link}${N}${N}`
             )
         );
+    }
+
+    /**
+     * wrap text to tag
+     * @param text
+     * @param tag
+     * @returns {string}
+     * @constructor
+     */
+    static WrapToTag(text, tag) {
+        return `<${tag}>${text}</${tag}>`;
+    }
+
+    static ToBoldDroppingBetsParticipant(event) {
+        const {participants} = event;
+        if (participants.includes('-')) {
+            const limitReturnedItems = 2;
+            let [participant1, participant2] = participants.split('-', limitReturnedItems);
+            if (event.isDroppingFirst) {
+                participant1 = TelegramPublisher.WrapToTag(participant1, 'b');
+            }
+            else {
+                participant2 = TelegramPublisher.WrapToTag(participant2, 'b');
+            }
+            return `${participant1}-${participant2}`;
+        }
+        return participants;
     }
 
     /**
