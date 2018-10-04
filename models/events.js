@@ -21,7 +21,7 @@ class Events {
     }
 
     static get TennisBaseUrl() {
-        return `http://www.oddsportal.com/matches/tennis/`;
+        return `https://www.oddsportal.com/matches/tennis/`;
     }
 
     /**

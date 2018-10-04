@@ -16,7 +16,7 @@
   "content_scripts": [
     {
       "matches": [
-        "http://www.oddsportal.com/*"
+        "https://www.oddsportal.com/*"
       ],
       "css": [
         "styles/styles.css"
