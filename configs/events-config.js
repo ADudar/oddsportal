@@ -40,7 +40,7 @@ class EventsConfig {
      * @returns {boolean}
      */
     static get skipWTAEvents() {
-        return true;
+        return false;
     }
 
     /**
@@ -48,7 +48,7 @@ class EventsConfig {
      * @returns {boolean}
      */
     static get skipDoublesEvents() {
-        return true;
+        return false;
     }
 
     /**
