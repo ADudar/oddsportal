@@ -98,25 +98,8 @@ class Events {
 
     /**
      * constructor
-     * @param skipNoBetsEvents
-     * @param skipResultsWithScores
-     * @param skipLiveEvents
-     * @param skipITF
-     * @param skipWTA
-     * @param skipDoubles
      */
-    constructor(skipNoBetsEvents = true,
-                skipResultsWithScores = true,
-                skipLiveEvents = true,
-                skipITF = true,
-                skipWTA = true,
-                skipDoubles = true) {
-        this.skipNoBetsEvents = skipNoBetsEvents;
-        this.skipResultsWithScores = skipResultsWithScores;
-        this.skipLiveEvents = skipLiveEvents;
-        this.skipITF = skipITF;
-        this.skipWTA = skipWTA;
-        this.skipDoubles = skipDoubles;
+    constructor() {
         /**
          * events selector
          * @type {string}
@@ -254,7 +237,7 @@ class Events {
      * @returns {boolean|*}
      */
     skipAndResultsWithScores(resultsWithScores, index) {
-        return this.skipResultsWithScores && !!resultsWithScores[index];
+        return EventsConfig.skipResultsWithScores && !!resultsWithScores[index];
     }
 
     /**
@@ -265,7 +248,7 @@ class Events {
      * @returns {boolean|*}
      */
     skipAndNoBets(avCoeffs1, index) {
-        return this.skipNoBetsEvents && isNaN(avCoeffs1[index]);
+        return EventsConfig.skipNoBetsEvents && isNaN(avCoeffs1[index]);
     }
 
     /**
@@ -275,7 +258,7 @@ class Events {
      * @param index
      */
     skipAndLive(isLive, index) {
-        return this.skipLiveEvents && isLive[index];
+        return EventsConfig.skipLiveEvents && isLive[index];
     }
 
     /**
@@ -286,7 +269,7 @@ class Events {
      * @returns {boolean}
      */
     skipAndITF(tournaments, index) {
-        return this.skipITF && tournaments[index].includes('ITF');
+        return EventsConfig.skipITFEvents && tournaments[index].includes('ITF');
 
     }
 
@@ -298,7 +281,7 @@ class Events {
      * @returns {boolean}
      */
     skipAndWTA(tournaments, index) {
-        return this.skipWTA && tournaments[index].includes('WTA');
+        return EventsConfig.skipWTAEvents && tournaments[index].includes('WTA');
     }
 
     /**
@@ -309,6 +292,6 @@ class Events {
      * @returns {boolean}
      */
     skipAndDoubles(tournaments, index) {
-        return this.skipDoubles && tournaments[index].includes('Doubles');
+        return EventsConfig.skipDoublesEvents && tournaments[index].includes('Doubles');
     }
 }

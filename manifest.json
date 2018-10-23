@@ -23,6 +23,7 @@
       ],
       "js": [
         "configs/dropping-percent-config.js",
+        "configs/events-config.js",
         "configs/min-max-bets-config.js",
         "configs/telegram-config.js",
         "filters/bookmakerName.js",
