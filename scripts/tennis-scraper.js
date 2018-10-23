@@ -8,6 +8,7 @@ class TennisScraper {
     static startScraping() {
         if (Events.isTodayTennisEventsPage || Events.isTomorrowTennisEventsPage) {
             Logger.log('script started');
+            ModeManager.setModeByUrl();
             StorageHelper.clearLocalStorage();
             const events = new Events().Events, i = 0;
             Logger.log('events', events);

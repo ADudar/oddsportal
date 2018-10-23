@@ -3,16 +3,12 @@
  */
 class TelegramPublisher {
 
+    /**
+     * api telegram url
+     * @returns {string}
+     */
     static get apiUrl() {
         return `https://api.telegram.org`;
-    }
-
-    static get botId() {
-        return TelegramConfig.botId;
-    }
-
-    static get chatId() {
-        return TelegramConfig.chatId;
     }
 
     /**
@@ -21,7 +17,7 @@ class TelegramPublisher {
      */
     static publish(message) {
         const N = `\n`;
-        const url = `${TelegramPublisher.apiUrl}/${TelegramPublisher.botId}${
+        const url = `${TelegramPublisher.apiUrl}/${TelegramConfig.botId}${
         N}/sendMessage?chat_id=${TelegramPublisher.chatId}&text=${message}&parse_mode=html`;
         const data = null;
         const response = (response) => Logger.log(`request success: ${response.ok}`, response);
@@ -93,5 +89,13 @@ class TelegramPublisher {
      */
     static round(oddsDrop) {
         return Math.round(oddsDrop * 100) / 100;
+    }
+
+    constructor() {
+        /**
+         * store chat id
+         * @type {string}
+         */
+        this.chatId = TelegramConfig.menChatId;
     }
 }

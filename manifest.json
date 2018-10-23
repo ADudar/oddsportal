@@ -37,6 +37,7 @@
         "scripts/tennis-scraper.js",
         "utils/error-handler.js",
         "utils/logger.js",
+        "utils/mode-manager.js",
         "utils/script-reloader.js",
         "utils/storage-helper.js",
         "utils/telegram-publisher.js",

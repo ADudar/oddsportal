@@ -11,10 +11,18 @@ class TelegramConfig {
     }
 
     /**
-     * getter chat id
+     * men chat id
      * @returns {string}
      */
-    static get chatId() {
+    static get menChatId() {
         return `-1001153954489`;
+    };
+
+    /**
+     * women chat id
+     * @returns {string}
+     */
+    static get womanChatId() {
+        return `-1001449820743`;
     };
 }

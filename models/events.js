@@ -68,7 +68,7 @@ class Events {
     static get isTodayTennisEventsPage() {
         const todayUrl = Events.todayTennisEventsUrl;
         const curUrl = window.location.href;
-        return todayUrl === curUrl;
+        return curUrl.includes(todayUrl);
     }
 
     /**
@@ -78,7 +78,7 @@ class Events {
     static get isTomorrowTennisEventsPage() {
         const tomorrowUrl = Events.tomorrowTennisEventsUrl;
         const curUrl = window.location.href;
-        return tomorrowUrl === curUrl;
+        return curUrl.includes(tomorrowUrl);
     }
 
     /**
@@ -304,6 +304,7 @@ class Events {
      * @returns {boolean}
      */
     skipAndMen(tournaments, index) {
-        return EventsConfig.skipMenEvents && tournaments[index].includes('Men');
+        return EventsConfig.skipMenEvents && (tournaments[index].includes('Men') ||
+            !tournaments[index].includes('WTA') && !tournaments[index].includes('Women')) ;
     }
 }

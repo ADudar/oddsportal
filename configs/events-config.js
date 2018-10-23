@@ -28,34 +28,28 @@ class EventsConfig {
     }
 
     /**
-     * ITF events
-     * @returns {boolean}
-     */
-    static get skipITFEvents() {
-        return true;
-    }
-
-    /**
-     * WTA events
-     * @returns {boolean}
-     */
-    static get skipWTAEvents() {
-        return false;
-    }
-
-    /**
      * Doubles events
      * @returns {boolean}
      */
     static get skipDoublesEvents() {
-        return false;
+        return true;
     }
 
-    /**
-     * Men events
-     * @returns {boolean}
-     */
-    static get skipMenEvents() {
-        return true;
-    };
+    constructor() {
+        /**
+         * ITF events
+         * @returns {boolean}
+         */
+        this.skipITFEvents = true;
+        /**
+         * WTA events
+         * @returns {boolean}
+         */
+        this.skipWTAEvents = true;
+        /**
+         * Men events
+         * @returns {boolean}
+         */
+        this.skipMenEvents = false;
+    }
 }
