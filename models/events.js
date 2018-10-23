@@ -209,7 +209,8 @@ class Events {
                 this.skipAndLive(isLive, index) ||
                 this.skipAndITF(tournaments, index) ||
                 this.skipAndWTA(tournaments, index) ||
-                this.skipAndDoubles(tournaments, index)) {
+                this.skipAndDoubles(tournaments, index) ||
+                this.skipAndMen(tournaments, index)) {
                 return prev;
             }
             prev.push({
@@ -293,5 +294,16 @@ class Events {
      */
     skipAndDoubles(tournaments, index) {
         return EventsConfig.skipDoublesEvents && tournaments[index].includes('Doubles');
+    }
+
+    /**
+     * skip event if skip flag
+     * and it is men
+     * @param tournaments
+     * @param index
+     * @returns {boolean}
+     */
+    skipAndMen(tournaments, index) {
+        return EventsConfig.skipMenEvents && tournaments[index].includes('Men');
     }
 }

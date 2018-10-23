@@ -50,4 +50,12 @@ class EventsConfig {
     static get skipDoublesEvents() {
         return true;
     }
+
+    /**
+     * Men events
+     * @returns {boolean}
+     */
+    static get skipMenEvents() {
+        return true;
+    };
 }
