@@ -87,9 +87,10 @@ class Events {
      * @returns {*}
      */
     static getParticipantsObject(participants) {
-        if (participants.includes('-')) {
+        const separatorParticipants = ' - ';
+        if (participants.includes(separatorParticipants)) {
             const limitReturnedItems = 2;
-            let [participant1, participant2] = participants.split('-', limitReturnedItems);
+            let [participant1, participant2] = participants.split(separatorParticipants, limitReturnedItems);
             return {participant1, participant2};
         }
         return {participants};
