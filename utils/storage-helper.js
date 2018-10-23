@@ -6,9 +6,10 @@ class StorageHelper {
     /**
      * save data to storage
      * @param dataObj
+     * @param callback
      */
-    static setDataToStorage(dataObj) {
-        chrome.storage.local.set(dataObj);
+    static setDataToStorage(dataObj, callback) {
+        chrome.storage.local.set(dataObj, callback);
     }
 
     /**
@@ -22,8 +23,9 @@ class StorageHelper {
 
     /**
      * clear chrome local storage
+     * @param callback
      */
-    static clearLocalStorage() {
-        chrome.storage.local.clear();
+    static clearLocalStorage(callback) {
+        chrome.storage.local.clear(callback);
     }
 }
