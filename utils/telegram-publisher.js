@@ -90,12 +90,4 @@ class TelegramPublisher {
     static round(oddsDrop) {
         return Math.round(oddsDrop * 100) / 100;
     }
-
-    constructor() {
-        /**
-         * store chat id
-         * @type {string}
-         */
-        this.chatId = TelegramConfig.menChatId;
-    }
 }

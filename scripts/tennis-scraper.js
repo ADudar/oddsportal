@@ -8,14 +8,14 @@ class TennisScraper {
     static startScraping() {
         if (Events.isTodayTennisEventsPage || Events.isTomorrowTennisEventsPage) {
             Logger.log('script started');
-            ModeManager.setModeByUrl();
+            ModeManager.setEventsForMode();
             StorageHelper.clearLocalStorage();
             const events = new Events().Events, i = 0;
             Logger.log('events', events);
             if (!events.length) {
                 return ErrorHandler.onErrorNoEvents();
             }
-            StorageHelper.setDataToStorage({i, count: events.length, events});
+            StorageHelper.setDataToStorage({i, count: events.length, events, mode: ModeManager.modeByUrl});
             EventDetails.navigateEventDetailsPage(events, i);
         } else { //event details
             StorageHelper.getDataFromStorage(['count', 'i', 'events'], TennisScraper.ParseEventsDetailsPage)
@@ -63,13 +63,14 @@ class TennisScraper {
      * on end handler
      */
     static onEnd() {
-        StorageHelper.getDataFromStorage(['events'], ({events}) => {
+        StorageHelper.getDataFromStorage(['events', 'mode'], ({events, mode}) => {
             Logger.log('end', events);
             const filteredEvents = events
                 .filter(event => DroppingBetsHelper.isDroppingBets(event))
                 .filter(event => bookmakerName(event, BOOKMAKERS.Pinnacle))
                 .filter(event => minMaxValueCoefficients(event));
             Logger.log('result', filteredEvents);
+            ModeManager.setChatIdForMode(mode);
             TelegramPublisher.publishMessages(TelegramPublisher.formatEvents(filteredEvents));
             StorageHelper.clearLocalStorage();
             ScriptReloader.reloadScriptIntervalInMinutes(60 * 2);
