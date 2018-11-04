@@ -7,7 +7,15 @@ class DroppingPercentConfig {
      * min coefficient
      * @returns {number}
      */
-    static get droppingPercent() {
+    static get minDroppingPercent() {
         return 15;
+    }
+
+    /**
+     * max coefficient
+     * @returns {number}
+     */
+    static get maxDroppingPercent() {
+        return 30;
     }
 }

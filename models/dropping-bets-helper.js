@@ -23,7 +23,9 @@ class DroppingBetsHelper {
      * @returns {boolean}
      */
     static isDroppingOdds(openingBet, currentBet) {
-        return DroppingBetsHelper.droppingOdds(openingBet, currentBet) >= DroppingPercentConfig.droppingPercent / 100;
+        const droppingsInPercents = DroppingBetsHelper.droppingOdds(openingBet, currentBet);
+        return droppingsInPercents >= DroppingPercentConfig.minDroppingPercent / 100
+            && droppingsInPercents <= DroppingPercentConfig.maxDroppingPercent / 100;
     }
 
     /**
