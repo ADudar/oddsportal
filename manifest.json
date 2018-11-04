@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
   "name": "OddsPortal tennis scraper",
-  "description": "OddsPortal tennis events scraper lowering the coefficient 15%",
-  "version": "1.0.5",
+  "description": "OddsPortal tennis events scraper lowering the coefficient 15%-30%, between 1.65-2.10",
+  "version": "1.0.6",
   "browser_action": {
     "default_icon": "assets/icon.png",
     "default_popup": "popup/popup.html"

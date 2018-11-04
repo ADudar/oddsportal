@@ -8,7 +8,7 @@ class MinMaxBetsConfig {
      * @returns {number}
      */
     static get minCoefficient() {
-        return 1.45;
+        return 1.65;
     }
 
     /**
