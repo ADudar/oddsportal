@@ -45,7 +45,7 @@ class ModeManager {
     /**
      * set chat id for mode
      */
-    static setChatIdForMode(mode) {
+    static setChatIdForMode(mode = 'men') {
         TelegramPublisher.chatId = ModeManager.womenMode === mode.toLowerCase() ? TelegramConfig.womanChatId : TelegramConfig.menChatId;
     }
 }

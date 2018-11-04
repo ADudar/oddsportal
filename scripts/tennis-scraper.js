@@ -6,7 +6,20 @@ class TennisScraper {
      * start script
      */
     static startScraping() {
-        if (Events.isTodayTennisEventsPage || Events.isTomorrowTennisEventsPage) {
+        if (Events.isTodayTennisEventsPage || Events.isTomorrowTennisEventsPage
+            || // redirect to saved url after setup timezone
+            StorageHelper.getDataFromStorage(['fromSetupTimeZone', 'savedUrl'], ({fromSetupTimeZone, savedUrl}) => {
+                if (fromSetupTimeZone) {
+                    StorageHelper.clearLocalStorage();
+                    return window.location.href = savedUrl;
+                }
+            })
+        ) {
+            if (TimezoneManager.GMT3TimeZone !== TimezoneManager.getCurrentTimeZone()) { // set url with cur timezone
+                Logger.log('setup GMT3 timezone');
+                StorageHelper.setDataToStorage({fromSetupTimeZone: true, savedUrl: window.location.href});
+                return TimezoneManager.setGMT3TimeZoneUrl();
+            }
             Logger.log('script started');
             ModeManager.setEventsForMode();
             StorageHelper.clearLocalStorage();
